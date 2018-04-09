@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Font Awesome para MDB -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>@ViewBag.Title</title>
+    <!-- Cargando estilos de MDB -->
+    @Styles.Render("~/Content/MDBStyles")
+</head>
+<body>
+    <header></header>
+
+    <div id="body">
+        @RenderBody()
+    </div>
+
+    <footer></footer>
+
+    <!-- Cargando scripts de MDB. -->
+    @Scripts.Render("~/Scripts/MDBScripts")
+
+    <!-- Scripts cargando en cada vista independientemente. -->
+    @RenderSection("scripts", required: false)
+</body>
+</html>

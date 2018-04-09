@@ -1,8 +1,10 @@
-﻿using System;
+﻿using DeveloopPrueba.App_Start;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Optimization;
 using System.Web.Routing;
 
 namespace DeveloopPrueba
@@ -13,6 +15,10 @@ namespace DeveloopPrueba
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            // Habilitando las optimizaciones de nombre para los bundles.
+            BundleTable.EnableOptimizations = true;
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace DeveloopPrueba.Controllers
 {
-    public class EncargosController : Controller
+    public class EncargosController : BaseController
     {
         // GET: Encargos
         public ActionResult Index()

@@ -25,5 +25,10 @@ namespace DeveloopPrueba.Infrastructure
 
             base.OnModelCreating(modelBuilder);
         }
+
+        public static ApplicationDbContext Create()
+        {
+            return new ApplicationDbContext();
+        }
     }
 }

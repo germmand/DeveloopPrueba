@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
 
 namespace DeveloopPrueba.Controllers
 {
-    public class EncargosController : BaseController
+    [RoutePrefix("api/Encargos")]
+    public class EncargosController : BaseApiController
     {
-        // GET: Encargos
-        public ActionResult Index()
+        public EncargosController()
         {
-            return View();
+
         }
+
+        // API Methods will go here...
     }
 }

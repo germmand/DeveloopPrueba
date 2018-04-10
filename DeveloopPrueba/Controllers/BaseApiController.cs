@@ -3,12 +3,14 @@ using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Web;
-using System.Web.Mvc;
+using System.Web.Http;
 
 namespace DeveloopPrueba.Controllers
 {
-    public class BaseController : Controller
+    public class BaseApiController : ApiController
     {
         private ApplicationDbContext _dbContext = null;
 
@@ -16,11 +18,11 @@ namespace DeveloopPrueba.Controllers
         {
             get
             {
-                return _dbContext ?? HttpContext.Request.GetOwinContext().Get<ApplicationDbContext>();
+                return _dbContext ?? HttpContext.Current.Request.GetOwinContext().Get<ApplicationDbContext>();
             }
         }
 
-        public BaseController()
+        public BaseApiController()
         {
 
         }

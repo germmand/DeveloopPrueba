@@ -65,6 +65,12 @@ namespace DeveloopPrueba.Controllers
                 // Se llena la colleción con la información en el fichero.
                 foreach(DataRow row in data.Tables[0].Rows)
                 {
+                    DateTime? date = row["Fecha"] as DateTime?;
+                    // Se convierte la fecha a cadena; dado un formato inválido, stringData tomará un valor nulo.
+                    string stringDate = date != null ? 
+                        ((DateTime)date).ToString("dd/MM/yyyy hh:mm", System.Globalization.CultureInfo.InvariantCulture) 
+                        : null;
+
                     encargosXls.Add(new EncargoModelDTO()
                     {
                         EncargoId       = 0,
@@ -76,7 +82,7 @@ namespace DeveloopPrueba.Controllers
                         Provincia       = row["provincia"]      as string,
                         Telefono        = row["telefono"]       as string,
                         Observaciones   = row["observaciones"]  as string,
-                        Fecha           = row["Fecha"]          as string
+                        Fecha           = stringDate
                     });
                 }
             } catch(Exception ex)

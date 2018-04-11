@@ -76,7 +76,7 @@ namespace DeveloopPrueba.Controllers
                         Provincia       = row["provincia"]      as string,
                         Telefono        = row["telefono"]       as string,
                         Observaciones   = row["observaciones"]  as string,
-                        Fecha           = DateTime.Now
+                        Fecha           = row["Fecha"]          as string
                     });
                 }
             } catch(Exception ex)

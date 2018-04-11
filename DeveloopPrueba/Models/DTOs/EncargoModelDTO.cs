@@ -43,6 +43,6 @@ namespace DeveloopPrueba.Models.DTOs
         public string Observaciones { get; set; }
 
         [Required(ErrorMessage = "El campo Fecha es obligatorio.")]
-        public DateTime Fecha { get; set; }
+        public string Fecha { get; set; }
     }
 }

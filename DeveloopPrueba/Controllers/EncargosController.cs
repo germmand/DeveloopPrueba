@@ -1,7 +1,9 @@
-﻿using DeveloopPrueba.Models.DTOs;
+﻿using DeveloopPrueba.Helpers;
+using DeveloopPrueba.Models.DTOs;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Data.OleDb;
 using System.IO;
@@ -97,8 +99,15 @@ namespace DeveloopPrueba.Controllers
             // Se elimina el archivo del a carpeta Temporary.
             File.Delete(filePath);
 
+            // Se efectua las validaciones de cada uno de las propiedades para devolverlas al frontend.
+            ICollection<ValidacionEncargoModelDTO> encargosValidados = new List<ValidacionEncargoModelDTO>();
+            foreach(EncargoModelDTO encargo in encargosXls)
+            {
+                encargosValidados.Add(ValidationHelper.ObtenerValidaciones(encargo));
+            }
+
             // Se retorna toda la información al frontend.
-            return Ok(new { Encargos = encargosXls });
+            return Ok(new { Encargos = encargosValidados });
         }
     }
 }

@@ -189,6 +189,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Configurations\EncargoModelConfiguration.cs" />
     <Compile Include="Models\DTOs\EncargoModelDTO.cs" />
+    <Compile Include="Models\DTOs\LoadFileModelsDTO.cs" />
     <Compile Include="Models\EncargoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />

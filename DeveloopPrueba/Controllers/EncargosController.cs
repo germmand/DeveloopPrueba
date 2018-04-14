@@ -117,7 +117,7 @@ namespace DeveloopPrueba.Controllers
             return Ok(new { Encargos = encargosValidados });
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("Check")]
         public IHttpActionResult CheckEntity(EncargoModelDTO encargoDTO)
         {

@@ -117,6 +117,17 @@ namespace DeveloopPrueba.Controllers
             return Ok(new { Encargos = encargosValidados });
         }
 
+        [HttpGet]
+        [Route("Check")]
+        public IHttpActionResult CheckEntity(EncargoModelDTO encargoDTO)
+        {
+            // Ésto se hace así y no con el ModelState ya que de ésta forma
+            // facilita la personalización del Json de respuesta en caso de error.
+            ValidacionEncargoModelDTO validacion = ValidationHelper.ObtenerValidaciones(encargoDTO);
+
+            return Ok(validacion);
+        }
+
         ////////////////////////
         /// CRUD DE ENCARGOS ///
         ////////////////////////

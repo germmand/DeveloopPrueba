@@ -1,18 +1,17 @@
-﻿using DeveloopPrueba.Helpers;
+﻿using AutoMapper;
+using DeveloopPrueba.Helpers;
+using DeveloopPrueba.Models;
 using DeveloopPrueba.Models.DTOs;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Data;
+using System.Data.Entity;
 using System.Data.OleDb;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using System.Diagnostics;
 
 namespace DeveloopPrueba.Controllers
 {
@@ -109,6 +108,100 @@ namespace DeveloopPrueba.Controllers
 
             // Se retorna toda la información al frontend.
             return Ok(new { Encargos = encargosValidados });
+        }
+
+        ////////////////////////
+        /// CRUD DE ENCARGOS ///
+        ////////////////////////
+
+        [HttpPost]
+        [Route("")]
+        public async Task<IHttpActionResult> CreateEncargo(EncargoModelDTO encargoDTO)
+        {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            EncargoModel encargoContext = Mapper.Map<EncargoModel>(encargoDTO);
+            DbContext.Encargos.Add(encargoContext);
+            await DbContext.SaveChangesAsync();
+
+            encargoDTO = Mapper.Map<EncargoModelDTO>(encargoContext);
+
+            return Created("api/Encargos/" + encargoDTO.EncargoId, encargoDTO);
+        }
+
+        [HttpPut]
+        [Route("{id:int}")]
+        public async Task<IHttpActionResult> UpdateEncargo(EncargoModelDTO encargoDTO)
+        {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            EncargoModel encargoContext = Mapper.Map<EncargoModel>(encargoDTO);
+            DbContext.Entry(encargoContext).State = EntityState.Modified;
+            await DbContext.SaveChangesAsync();
+
+            encargoDTO = Mapper.Map<EncargoModelDTO>(encargoContext);
+
+            return Ok(encargoDTO);
+        }
+
+        [HttpDelete]
+        [Route("{id:int}")]
+        public async Task<IHttpActionResult> DeleteEncargo(int id)
+        {
+            EncargoModel encargoContext = await DbContext.Encargos.FindAsync(id);
+            if(encargoContext == null)
+            {
+                return BadRequest("El id especificado no existe.");
+            }
+
+            DbContext.Encargos.Remove(encargoContext);
+            await DbContext.SaveChangesAsync();
+
+            EncargoModelDTO encargoDTO = Mapper.Map<EncargoModelDTO>(encargoContext);
+
+            return Ok(encargoDTO);
+        }
+
+        [HttpGet]
+        [Route("{id:int}")]
+        public async Task<IHttpActionResult> GetEncargoById(int id)
+        {
+            EncargoModel encargoContext = await DbContext.Encargos.FindAsync(id);
+            if (encargoContext == null)
+            {
+                return BadRequest("El id especificado no existe.");
+            }
+
+            EncargoModelDTO encargoDTO = Mapper.Map<EncargoModelDTO>(encargoContext);
+
+            return Ok(encargoDTO);
+        }
+
+        [HttpGet]
+        [Route("")]
+        public IHttpActionResult GetEncargos(int page = 0, int size = 0)
+        {
+            if(page < 0 || size < 0)
+            {
+                return BadRequest("Los índices de paginación no pueden ser menores que cero.");
+            }
+
+            IQueryable<EncargoModel> encargos = page == 0 || size == 0 
+                ? DbContext.Encargos.AsQueryable()
+                : DbContext.Encargos
+                    .OrderBy(e => e.EncargoId)
+                    .Skip((page - 1) * size)
+                    .Take(size);
+
+            ICollection<EncargoModelDTO> encargosDTO = Mapper.Map<List<EncargoModelDTO>>(encargos.ToList());
+
+            return Ok(new { Encargos = encargosDTO });
         }
     }
 }

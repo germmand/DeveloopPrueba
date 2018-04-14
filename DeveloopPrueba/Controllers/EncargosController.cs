@@ -25,8 +25,13 @@ namespace DeveloopPrueba.Controllers
 
         [HttpPost]
         [Route("UploadFile")]
-        public IHttpActionResult UploadFile()
+        public IHttpActionResult UploadFile(int rowIndex = 0)
         {
+            if(rowIndex < 0)
+            {
+                return BadRequest("El índice de la fila no puede ser menor que cero.");
+            }
+
             HttpRequest httpRequest = HttpContext.Current.Request;
             if(httpRequest.Files.Count <= 0)
             {
@@ -65,8 +70,10 @@ namespace DeveloopPrueba.Controllers
                 adapter.Fill(data);
 
                 // Se llena la colleción con la información en el fichero.
-                foreach(DataRow row in data.Tables[0].Rows)
+                for(int i = rowIndex; i < data.Tables[0].Rows.Count; i++)
                 {
+                    DataRow row = data.Tables[0].Rows[i];
+
                     DateTime? date = row["Fecha"] as DateTime?;
                     // Se convierte la fecha a cadena; dado un formato inválido, stringData tomará un valor nulo.
                     string stringDate = date != null ? 
@@ -133,7 +140,6 @@ namespace DeveloopPrueba.Controllers
         }
 
         [HttpPut]
-        [Route("{id:int}")]
         public async Task<IHttpActionResult> UpdateEncargo(EncargoModelDTO encargoDTO)
         {
             if(!ModelState.IsValid)

@@ -13,7 +13,7 @@ namespace DeveloopPrueba.Helpers
         {
             ValidationContext context = new ValidationContext(encargo, null, null);
             ICollection<ValidationResult> results = new List<ValidationResult>();
-            bool isValid = Validator.TryValidateObject(encargo, context, results);
+            bool isValid = Validator.TryValidateObject(encargo, context, results, true);
 
             ValidacionEncargoModelDTO encargoValidado = new ValidacionEncargoModelDTO()
             {

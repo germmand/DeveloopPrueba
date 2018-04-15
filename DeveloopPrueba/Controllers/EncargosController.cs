@@ -45,6 +45,11 @@ namespace DeveloopPrueba.Controllers
             HttpPostedFile postedFile = httpRequest.Files[0];
             string fileExtension = postedFile.FileName.Split('.').Last();
             string filePath = HttpContext.Current.Server.MapPath("~/Temporary/" + Guid.NewGuid().ToString("n") + "." + fileExtension);
+            if(fileExtension != "xls" && fileExtension != "xlsx")
+            {
+                return BadRequest("Archivo no válido. Asegúrese que el archivo es un excel (.xls, .xlsx).");
+            }
+
             postedFile.SaveAs(filePath);
 
             // Se procede a leer la información en el fichero.

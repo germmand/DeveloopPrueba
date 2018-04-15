@@ -27,4 +27,5 @@ Se trató se mantener siempre una estructura limpia y organizada, por lo que las
 * Toda la comunicación entre el _frontend_ y el _backend_ se hace en formato `JSON`, exceptuando el _endpoint_ que recibe el archivo Excel el cual tiene un `Content-Type` de `multipart/form-data`.
 
 ## BUGS
-* Probablemente alguno. 
+* Cuando el formato de fecha que recibe es inválido, éste es truncado y se devuelve un _string_ vacío. Cuando el comportamiento deseado es retornar el mismo dato/_string_ que recibió adjunto con un mensaje en la respuesta indicando el formato de la fecha para que éste luego sea mostrado desde el _frontend_.
+* Probablemente algún otro. 

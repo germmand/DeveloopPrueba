@@ -151,6 +151,7 @@ namespace DeveloopPrueba.Controllers
         }
 
         [HttpPut]
+        [Route("")]
         public async Task<IHttpActionResult> UpdateEncargo(EncargoModelDTO encargoDTO)
         {
             if(!ModelState.IsValid)
